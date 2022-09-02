@@ -25,14 +25,21 @@ class SplashController extends GetxController {
     print('tempPath: $tempPath');
     print('appDocPath: $appDocPath');
     final isar = await Isar.open(
-      schemas: [ContactModelSchema],
+      [ContactModelSchema],
       directory: appDocPath,
     );
+    //     final isar = await Isar.open(
+    //   schemas: [ContactModelSchema],
+    //   directory: appDocPath,
+    // );
     final contact = ContactModel()..name = "name1";
-    await isar.writeTxn((isar) async {
+    await isar.writeTxn(() async {
       contact.id = await isar.contactModels.put(contact);
     });
+    // await isar.writeTxn((isar) async {
+    //   contact.id = await isar.contactModels.put(contact);
+    // });
     final allContacts = await isar.contactModels.where().findAll();
-    print(allContacts);
+    print(allContacts.toString());
   }
 }
