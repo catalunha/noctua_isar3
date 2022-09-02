@@ -9,7 +9,7 @@ class SplashPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Splash'),
       ),
-      body: const Center(child: const CircularProgressIndicator()),
+      body: const Center(child: Text('Fim...')),
     );
   }
 }

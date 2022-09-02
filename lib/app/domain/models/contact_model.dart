@@ -4,7 +4,7 @@ part 'contact_model.g.dart';
 
 @Collection()
 class ContactModel {
-  Id id = 0;
+  Id? id; //or Id id = Isar.autoIncrement;
   late String name;
 
   @override

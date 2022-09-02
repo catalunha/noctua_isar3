@@ -93,7 +93,7 @@ Object _contactModelSerializeWeb(
 
 ContactModel _contactModelDeserializeWeb(
     IsarCollection<ContactModel> collection, Object jsObj) {
-  /*final object = ContactModel();object.id = IsarNative.jsObjectGet(jsObj, r'id') ?? (double.negativeInfinity as int);object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';*/
+  /*final object = ContactModel();object.id = IsarNative.jsObjectGet(jsObj, r'id') ;object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';*/
   //return object;
   throw UnimplementedError();
 }
@@ -106,7 +106,7 @@ P _contactModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
 }
 
 Id _contactModelGetId(ContactModel object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _contactModelGetLinks(ContactModel object) {
@@ -200,8 +200,25 @@ extension ContactModelQueryWhere
 
 extension ContactModelQueryFilter
     on QueryBuilder<ContactModel, ContactModel, QFilterCondition> {
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
   QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idEqualTo(
-      int value) {
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -211,7 +228,7 @@ extension ContactModelQueryFilter
   }
 
   QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idGreaterThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -224,7 +241,7 @@ extension ContactModelQueryFilter
   }
 
   QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idLessThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -237,8 +254,8 @@ extension ContactModelQueryFilter
   }
 
   QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
