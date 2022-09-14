@@ -1,0 +1,44 @@
+[
+  {
+    "id": "xqweqw",
+    "name": "Doris Larson",
+    "alias": [
+      "eos",
+      "qSchmidt"
+    ],
+    "laws": [
+      "lei1",
+      "lei2"
+    ],
+    "groups": [
+      "g1",
+      "g2"
+    ],
+    "mother": "Phyllis Hawkins",
+    "cpf": "83764051280",
+    "birthday":"1969-07-20T20:18:04.000Z",
+    "photoUrl":"https://parsefiles.back4app.com/SLWtrlBJSzdUpAvA2Jh1aXkr87k65vuB3Mjvkjco/ec44adbb2d9ea27fe64a8607b00586e1_a3.png",
+    "marks": "voluptatem quam ratione laborum assumenda laboriosam dolores."
+  },
+  {
+    "id": "aokdekrw",
+    "name": "Sandra Andrews",
+    "alias": [
+      "DeborahMcdonald",
+      "gSimmons"
+    ],
+    "laws": [
+      "lei1",
+      "lei2"
+    ],
+    "groups": [
+      "g1",
+      "g2"
+    ],
+    "cpf": "63012754890",
+    "mother": "Alice Gonzalez",
+    "birthday":"1969-07-20T20:18:04.000Z",
+    "photoUrl":"https://parsefiles.back4app.com/SLWtrlBJSzdUpAvA2Jh1aXkr87k65vuB3Mjvkjco/ec44adbb2d9ea27fe64a8607b00586e1_a3.png",
+    "marks": "dolor iste est labore tenetur exercitationem!"
+  }
+]

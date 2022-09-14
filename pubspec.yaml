@@ -18,8 +18,8 @@ dependencies:
   # Remote DataBase Back4app
   parse_server_sdk_flutter: ^3.1.3
   # Local DataBase Isar
-  isar: ^3.0.0-dev.13
-  isar_flutter_libs: ^3.0.0-dev.13
+  isar: ^3.0.0-dev.14
+  isar_flutter_libs: ^3.0.0-dev.14
   # Google
   google_fonts: ^3.0.1  
   # upload Files
@@ -37,8 +37,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  isar_generator: ^3.0.0-dev.13
+  isar_generator: ^3.0.0-dev.14
   build_runner: ^2.2.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/data/  

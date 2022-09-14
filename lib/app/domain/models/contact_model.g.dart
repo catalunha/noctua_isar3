@@ -17,8 +17,13 @@ const ContactModelSchema = CollectionSchema(
   name: r'ContactModel',
   id: 122675080158055862,
   properties: {
-    r'name': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 0,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
     )
@@ -30,14 +35,14 @@ const ContactModelSchema = CollectionSchema(
   serializeWeb: _contactModelSerializeWeb,
   deserializeWeb: _contactModelDeserializeWeb,
   deserializePropWeb: _contactModelDeserializePropWeb,
-  idName: r'id',
+  idName: r'isarId',
   indexes: {},
   links: {},
   embeddedSchemas: {},
   getId: _contactModelGetId,
   getLinks: _contactModelGetLinks,
   attach: _contactModelAttach,
-  version: '3.0.0-dev.13',
+  version: '3.0.0-dev.14',
 );
 
 int _contactModelEstimateSize(
@@ -56,7 +61,8 @@ int _contactModelSerializeNative(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
+  writer.writeLong(offsets[0], object.hashCode);
+  writer.writeString(offsets[1], object.name);
   return writer.usedBytes;
 }
 
@@ -66,9 +72,10 @@ ContactModel _contactModelDeserializeNative(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = ContactModel();
-  object.id = id;
-  object.name = reader.readString(offsets[0]);
+  final object = ContactModel(
+    isarId: id,
+    name: reader.readString(offsets[1]),
+  );
   return object;
 }
 
@@ -80,6 +87,8 @@ P _contactModelDeserializePropNative<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readLong(offset)) as P;
+    case 1:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -93,7 +102,7 @@ Object _contactModelSerializeWeb(
 
 ContactModel _contactModelDeserializeWeb(
     IsarCollection<ContactModel> collection, Object jsObj) {
-  /*final object = ContactModel();object.id = IsarNative.jsObjectGet(jsObj, r'id') ;object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';*/
+  /*final object = ContactModel(isarId: IsarNative.jsObjectGet(jsObj, r'isarId') ,name: IsarNative.jsObjectGet(jsObj, r'name') ?? '',);*/
   //return object;
   throw UnimplementedError();
 }
@@ -106,7 +115,7 @@ P _contactModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
 }
 
 Id _contactModelGetId(ContactModel object) {
-  return object.id ?? Isar.autoIncrement;
+  return object.isarId ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _contactModelGetLinks(ContactModel object) {
@@ -115,12 +124,12 @@ List<IsarLinkBase<dynamic>> _contactModelGetLinks(ContactModel object) {
 
 void _contactModelAttach(
     IsarCollection<dynamic> col, Id id, ContactModel object) {
-  object.id = id;
+  object.isarId = id;
 }
 
 extension ContactModelQueryWhereSort
     on QueryBuilder<ContactModel, ContactModel, QWhere> {
-  QueryBuilder<ContactModel, ContactModel, QAfterWhere> anyId() {
+  QueryBuilder<ContactModel, ContactModel, QAfterWhere> anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -129,69 +138,70 @@ extension ContactModelQueryWhereSort
 
 extension ContactModelQueryWhere
     on QueryBuilder<ContactModel, ContactModel, QWhereClause> {
-  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> idEqualTo(
-      int id) {
+  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> isarIdEqualTo(
+      int isarId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
+        lower: isarId,
+        upper: isarId,
       ));
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> idNotEqualTo(
-      int id) {
+  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> isarIdNotEqualTo(
+      int isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> idGreaterThan(
-      int id,
+  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> isarIdGreaterThan(
+      int isarId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
+        IdWhereClause.greaterThan(lower: isarId, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> isarIdLessThan(
+      int isarId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
+        IdWhereClause.lessThan(upper: isarId, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
+  QueryBuilder<ContactModel, ContactModel, QAfterWhereClause> isarIdBetween(
+    int lowerIsarId,
+    int upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
+        lower: lowerIsarId,
         includeLower: includeLower,
-        upper: upperId,
+        upper: upperIsarId,
         includeUpper: includeUpper,
       ));
     });
@@ -200,60 +210,119 @@ extension ContactModelQueryWhere
 
 extension ContactModelQueryFilter
     on QueryBuilder<ContactModel, ContactModel, QFilterCondition> {
-  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
-    });
-  }
-
   QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
-      idIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
-    });
-  }
-
-  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idEqualTo(
-      int? value) {
+      hashCodeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
+        property: r'hashCode',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      isarIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isarId',
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      isarIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isarId',
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> isarIdEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isarId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      isarIdGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'id',
+        property: r'isarId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idLessThan(
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition>
+      isarIdLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'id',
+        property: r'isarId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<ContactModel, ContactModel, QAfterFilterCondition> isarIdBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -261,7 +330,7 @@ extension ContactModelQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
+        property: r'isarId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -413,6 +482,18 @@ extension ContactModelQueryLinks
 
 extension ContactModelQuerySortBy
     on QueryBuilder<ContactModel, ContactModel, QSortBy> {
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<ContactModel, ContactModel, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -428,15 +509,27 @@ extension ContactModelQuerySortBy
 
 extension ContactModelQuerySortThenBy
     on QueryBuilder<ContactModel, ContactModel, QSortThenBy> {
-  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenById() {
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenByHashCode() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
+      return query.addSortBy(r'hashCode', Sort.asc);
     });
   }
 
-  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenByHashCodeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenByIsarId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ContactModel, ContactModel, QAfterSortBy> thenByIsarIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
@@ -455,6 +548,12 @@ extension ContactModelQuerySortThenBy
 
 extension ContactModelQueryWhereDistinct
     on QueryBuilder<ContactModel, ContactModel, QDistinct> {
+  QueryBuilder<ContactModel, ContactModel, QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<ContactModel, ContactModel, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -465,9 +564,15 @@ extension ContactModelQueryWhereDistinct
 
 extension ContactModelQueryProperty
     on QueryBuilder<ContactModel, ContactModel, QQueryProperty> {
-  QueryBuilder<ContactModel, int, QQueryOperations> idProperty() {
+  QueryBuilder<ContactModel, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
+      return query.addPropertyName(r'isarId');
+    });
+  }
+
+  QueryBuilder<ContactModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 
