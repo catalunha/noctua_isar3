@@ -6,6 +6,13 @@ import 'package:noctua_isar/app/routes.dart';
 class PeopleController extends GetxController {
   List<PersonModel> peopleList = <PersonModel>[].obs;
   var peopleCount = 0.obs;
+
+  final Rxn<DateTime> _selectedDate = Rxn<DateTime>();
+  DateTime? get selectedDate => _selectedDate.value;
+  set selectedDate(DateTime? selectedDate1) {
+    _selectedDate.value = selectedDate1;
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -42,6 +49,7 @@ class PeopleController extends GetxController {
     required String markContains2String,
     required bool markContains3Bool,
     required String markContains3String,
+    required bool birthdayBool,
   }) async {
     Isar? isar1 = Isar.getInstance();
     peopleList.clear();
@@ -139,8 +147,15 @@ class PeopleController extends GetxController {
       //     .marksContains(markContains3String)
       //     .findAll());
     }
+    if (birthdayBool) {
+      a = a.birthdayEqualTo(selectedDate);
 
-    // peopleFiltered.addAll(await isar1!.personModels
+      // peopleFiltered.addAll(await isar1!.personModels
+      //     .filter()
+      //     .marksContains(markContains3String)
+      //     .findAll());
+    }
+    // peopleFiltered.addAll(await isar1.personModels
     //     .filter()
     //     .marksContains(markContainsString)
     //     .marksContains(markContains2String)

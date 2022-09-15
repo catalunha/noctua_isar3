@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noctua_isar/app/view/controllers/people/people_controller.dart';
+import 'package:noctua_isar/app/view/pages/people/parts/calendar_button.dart';
 import 'package:noctua_isar/app/view/utils/app_icon.dart';
 import 'package:noctua_isar/app/view/utils/app_textformfield.dart';
 
@@ -25,6 +26,7 @@ class _SearchPageState extends State<SearchPage> {
   bool _markContains = false;
   bool _markContains2 = false;
   bool _markContains3 = false;
+  bool _birthday = false;
   final _aliasContainsTEC = TextEditingController();
   final _aliasEqualToTEC = TextEditingController();
   final _nameContainsTEC = TextEditingController();
@@ -298,6 +300,27 @@ class _SearchPageState extends State<SearchPage> {
                   ],
                 ),
               ),
+              Card(
+                child: Column(
+                  children: [
+                    const Text('campo Data de nascimento'),
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _birthday,
+                          onChanged: (value) {
+                            setState(() {
+                              _birthday = value!;
+                            });
+                          },
+                        ),
+                        CalendarButton(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 100)
             ],
           ),
@@ -332,6 +355,7 @@ class _SearchPageState extends State<SearchPage> {
               markContains2String: _markContains2TEC.text,
               markContains3Bool: _markContains3,
               markContains3String: _markContains3TEC.text,
+              birthdayBool: _birthday,
             );
             // Get.back();
           }

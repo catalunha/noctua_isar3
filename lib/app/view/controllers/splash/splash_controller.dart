@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 // import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
@@ -42,7 +43,7 @@ class SplashController extends GetxController {
     // for (var element in allContacts) {
     //   print(element);
     // }
-    // await deleteAllPeople(isar);
+    await deleteAllPeople(isar);
     final personModelsCount = await isar.personModels.count();
     // final allPhotos = await isar.personModels.where().findAll();
     print('openIsarInstance -> personModelsCount $personModelsCount');
@@ -61,7 +62,11 @@ class SplashController extends GetxController {
     // for (var element in data) {
     for (var i = 0; i < 1000; i++) {
       dynamic element = data[i];
-      element['birthday'] = "1969-07-20T20:18:04.000Z";
+      Random random = Random();
+      int month = random.nextInt(12);
+      int day = random.nextInt(28);
+      DateTime c = DateTime(2022, month, day);
+      element['birthday'] = c.toIso8601String();
       element['photoUrl'] =
           "https://parsefiles.back4app.com/SLWtrlBJSzdUpAvA2Jh1aXkr87k65vuB3Mjvkjco/ec44adbb2d9ea27fe64a8607b00586e1_a3.png";
       PersonModel personModel = PersonModel.fromMap(element);

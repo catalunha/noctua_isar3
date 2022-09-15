@@ -13,14 +13,12 @@ class PersonModel {
   final String? cpf;
   final String? mother;
   final String? marks;
-  final String? history;
   final DateTime? birthday;
   final List<String>? alias;
-  List<String>? nameWords;
-  List<String>? motherWords;
   final List<String>? laws;
   final List<String>? groups;
   final String? photoUrl;
+
   List<byte>? photoByte;
   PersonModel({
     this.idIsar,
@@ -33,7 +31,6 @@ class PersonModel {
     this.mother,
     // this.motherWords,
     this.marks,
-    this.history,
     this.laws,
     this.groups,
     this.photoUrl,
@@ -66,7 +63,6 @@ class PersonModel {
       alias: alias ?? this.alias,
       mother: mother ?? this.mother,
       marks: marks ?? this.marks,
-      history: history ?? this.history,
       laws: laws ?? this.laws,
       groups: groups ?? this.groups,
       photoUrl: photoUrl ?? this.photoUrl,
@@ -99,9 +95,7 @@ class PersonModel {
     if (marks != null) {
       result.addAll({'marks': marks});
     }
-    if (history != null) {
-      result.addAll({'history': history});
-    }
+
     if (laws != null) {
       result.addAll({'laws': laws});
     }
@@ -125,7 +119,6 @@ class PersonModel {
       alias: List<String>.from(map['alias']),
       mother: map['mother'],
       marks: map['marks'],
-      history: map['history'],
       laws: map['laws'] != null ? List<String>.from(map['laws']) : null,
       groups: map['groups'] != null ? List<String>.from(map['groups']) : null,
       photoUrl: map['photoUrl'],
@@ -139,7 +132,7 @@ class PersonModel {
 
   @override
   String toString() {
-    return 'PersonModel(idIsar: $idIsar, id: $id, name: $name, nameWords: $nameWords, cpf: $cpf, birthday: $birthday, alias: $alias, mother: $mother, motherWords: $motherWords, marks: $marks, history: $history, laws: $laws, groups: $groups, photoUrl: $photoUrl, photoByte: $photoByte)';
+    return 'PersonModel(idIsar: $idIsar, id: $id, name: $name, cpf: $cpf, birthday: $birthday, alias: $alias, mother: $mother,  marks: $marks,  laws: $laws, groups: $groups, photoUrl: $photoUrl, photoByte: $photoByte)';
   }
 
   @override
@@ -150,14 +143,11 @@ class PersonModel {
         other.idIsar == idIsar &&
         other.id == id &&
         other.name == name &&
-        listEquals(other.nameWords, nameWords) &&
         other.cpf == cpf &&
         other.birthday == birthday &&
         listEquals(other.alias, alias) &&
         other.mother == mother &&
-        listEquals(other.motherWords, motherWords) &&
         other.marks == marks &&
-        other.history == history &&
         listEquals(other.laws, laws) &&
         listEquals(other.groups, groups) &&
         other.photoUrl == photoUrl &&
@@ -169,14 +159,11 @@ class PersonModel {
     return idIsar.hashCode ^
         id.hashCode ^
         name.hashCode ^
-        nameWords.hashCode ^
         cpf.hashCode ^
         birthday.hashCode ^
         alias.hashCode ^
         mother.hashCode ^
-        motherWords.hashCode ^
         marks.hashCode ^
-        history.hashCode ^
         laws.hashCode ^
         groups.hashCode ^
         photoUrl.hashCode ^
