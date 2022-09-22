@@ -43,7 +43,7 @@ class SplashController extends GetxController {
     // for (var element in allContacts) {
     //   print(element);
     // }
-    await deleteAllPeople(isar);
+    // await deleteAllPeople(isar);
     final personModelsCount = await isar.personModels.count();
     // final allPhotos = await isar.personModels.where().findAll();
     print('openIsarInstance -> personModelsCount $personModelsCount');
